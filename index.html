@@ -1,1 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThS.BS. Đặng Quốc Hùng - Dentist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary-blue: rgb(0, 87, 138);
+            --silver-gray: rgb(176, 190, 197);
+            --dark-text: #1a202c;
+            --light-text: #f7fafc;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-blue), #003a5c);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            overflow: hidden;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            border: 3px solid white;
+            border-radius: 20px;
+        }
+        .logo-icon {
+            width: 80px;
+            height: auto;
+            fill: white;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary-blue), var(--silver-gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .floating-btn-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .floating-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 9999px;
+            color: white;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, padding 0.3s ease;
+        }
+        .floating-btn:hover {
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .zalo-btn {
+            background-color: #0068ff;
+        }
+        .zalo-btn .btn-label {
+            display: none;
+            margin-left: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .zalo-btn:hover {
+            width: auto;
+            padding: 0 16px;
+        }
+        .zalo-btn:hover .btn-label {
+            display: inline;
+        }
+        .location-card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .location-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -15px rgba(0, 87, 138, 0.2);
+        }
+        .copy-btn {
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        .location-card:hover .copy-btn {
+            opacity: 1;
+        }
+        .copy-feedback {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark-text);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        .parallax-bg {
+            background-image: url('https://placehold.co/1920x1080/001f3f/ffffff?text=Premium+Clinic+Interior');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #header.text-light .nav-link, #header.text-light .lang-btn { color: var(--light-text); }
+        #header.text-dark .nav-link, #header.text-dark .lang-btn { color: var(--dark-text); }
+        .nav-link { transition: color 0.4s ease; }
+    </style>
+</head>
+<body class="bg-gray-100">
 
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div id="logo-container" class="logo-container">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 15.59L15.59 17L12 13.41L8.41 17L7 15.59L10.59 12L7 8.41L8.41 7L12 10.59L15.59 7L17 8.41L13.41 12L17 15.59Z" fill="white"/></svg>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="invisible opacity-0">
+        <!-- Header -->
+        <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 text-light">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="text-xl font-bold nav-link" data-lang="logo">Dr. Hùng Dental</div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="nav-link hover:opacity-75 transition" data-lang="nav_about">About</a>
+                    <a href="#services" class="nav-link hover:opacity-75 transition" data-lang="nav_services">Services</a>
+                    <a href="#locations" class="nav-link hover:opacity-75 transition" data-lang="nav_locations">Locations</a>
+                    <a href="#contact" class="nav-link hover:opacity-75 transition" data-lang="nav_contact">Contact</a>
+                </div>
+                <!-- Language Switcher -->
+                <div class="relative">
+                    <button id="lang-switcher" class="flex items-center lang-btn">
+                        <span id="current-lang-flag">🇻🇳</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-36 bg-white rounded-md shadow-lg hidden">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang-code="vi"><span class="mr-2">🇻🇳</span> Tiếng Việt</a>
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang-code="en"><span class="mr-2">🇬🇧</span> English</a>
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang-code="ru"><span class="mr-2">🇷🇺</span> Русский</a>
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang-code="zh"><span class="mr-2">🇨🇳</span> 中文</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero / Profile Section -->
+        <section id="about" class="min-h-screen flex items-center justify-center parallax-bg relative section-dark">
+             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div class="container mx-auto px-6 text-center text-white relative z-10">
+                <div id="profile-card" class="max-w-2xl mx-auto glassmorphism rounded-3xl p-8 md:p-12">
+                    <img id="profile-pic" src="https://i.ibb.co/6yv3g2z/doctor-avatar.jpg" alt="Bác sĩ Đặng Quốc Hùng" class="w-36 h-36 rounded-full mx-auto mb-6 border-4 border-white shadow-lg object-cover">
+                    <h1 id="dentist-name" class="text-4xl md:text-5xl font-bold mb-4" data-lang="doctor_name">ThS.BS. Đặng Quốc Hùng</h1>
+                    <div class="mt-4 text-left max-w-md mx-auto space-y-2">
+                        <p class="text-md md:text-lg text-gray-200"><strong data-lang="doctor_position_label">Chức vụ:</strong> <span data-lang="doctor_position_value">Bác sĩ Nha khoa</span></p>
+                        <p class="text-md md:text-lg text-gray-200"><strong data-lang="doctor_education_label">Học vấn:</strong> <span data-lang="doctor_education_value">Thạc sĩ chuyên ngành Răng – Hàm – Mặt, tốt nghiệp Đại học Quốc gia Voronezh</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-24 bg-white section-light">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-16 gradient-text" data-lang="services_title">Các dịch vụ điều trị</h2>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-x-12 gap-y-8">
+                    <!-- Service Items -->
+                    <div class="service-item flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">🦷</div>
+                        <div><h3 class="text-lg font-semibold" data-lang="service1">Điều trị sâu răng, viêm tủy</h3></div>
+                    </div>
+                    <div class="service-item flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">✨</div>
+                        <div><h3 class="text-lg font-semibold" data-lang="service2">Lấy cao răng, điều trị viêm lợi</h3></div>
+                    </div>
+                    <div class="service-item flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">😖</div>
+                        <div><h3 class="text-lg font-semibold" data-lang="service3">Nhổ răng, nhổ răng số 8 khó</h3></div>
+                    </div>
+                    <div class="service-item flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">👑</div>
+                        <div><h3 class="text-lg font-semibold" data-lang="service4">Phục hình răng sứ, cấy ghép Implant</h3></div>
+                    </div>
+                    <div class="service-item flex items-start space-x-4 md:col-span-2 md:justify-self-center">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">😁</div>
+                        <div><h3 class="text-lg font-semibold" data-lang="service5">Niềng răng – Chỉnh nha thẩm mỹ</h3></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Locations Section -->
+        <section id="locations" class="py-24 bg-gray-100 section-light">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-16 gradient-text" data-lang="locations_title">Các chi nhánh</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Location Cards -->
+                    <div class="location-card bg-white p-6 rounded-2xl shadow-md relative">
+                        <h3 class="text-xl font-bold mb-2 text-blue-800" data-lang="location1_title">Chi nhánh 1</h3>
+                        <p class="text-gray-700" data-lang="location1_address">r. Котельники, мкр. Парковый д.1</p>
+                        <p class="text-sm text-gray-500 mb-4" data-lang="location1_desc">Metro Котельники, cạnh Sadovod & Liublino</p>
+                        <button class="copy-btn absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200" onclick="copyToClipboard(this, 'r. Котельники, мкр. Парковый д.1')">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                        <div class="copy-feedback" data-lang="copied">Đã chép!</div>
+                    </div>
+                    <div class="location-card bg-white p-6 rounded-2xl shadow-md relative">
+                        <h3 class="text-xl font-bold mb-2 text-blue-800" data-lang="location2_title">Chi nhánh 2</h3>
+                        <p class="text-gray-700" data-lang="location2_address">Есениинский бульвар 21к2</p>
+                        <p class="text-sm text-gray-500 mb-4" data-lang="location2_desc">Metro Селигерская, gần Trung tâm Hà Nội–Moscow</p>
+                        <button class="copy-btn absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200" onclick="copyToClipboard(this, 'Есениинский бульвар 21к2')">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                         <div class="copy-feedback" data-lang="copied">Đã chép!</div>
+                    </div>
+                    <div class="location-card bg-white p-6 rounded-2xl shadow-md relative">
+                        <h3 class="text-xl font-bold mb-2 text-blue-800" data-lang="location3_title">Chi nhánh 3</h3>
+                        <p class="text-gray-700" data-lang="location3_address">r. Видное, Ермолинская д.3</p>
+                        <p class="text-sm text-gray-500 mb-4" data-lang="location3_desc">Thành phố Vidnoye</p>
+                        <button class="copy-btn absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200" onclick="copyToClipboard(this, 'r. Видное, Ермолинская д.3')">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                         <div class="copy-feedback" data-lang="copied">Đã chép!</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-white section-light">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold mb-4 gradient-text" data-lang="contact_title">Liên Hệ</h2>
+                <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto" data-lang="contact_subtitle">Sẵn sàng cho nụ cười hoàn hảo? Liên hệ trực tiếp với chúng tôi qua ứng dụng bạn yêu thích.</p>
+                <div class="space-y-4 max-w-md mx-auto">
+                    <p class="text-2xl font-semibold tracking-wider">📞 +7 904 210 9098</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Contact Buttons -->
+        <div class="floating-btn-container">
+            <a href="https://wa.me/79042109098" target="_blank" class="floating-btn bg-green-500" aria-label="WhatsApp">
+                <!-- Correct WhatsApp Icon -->
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-26.7l-7-4.1-72.5 19.1 19.4-70.5-4.5-7.3c-18.4-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            </a>
+            <a href="https://zalo.me/79042109098" target="_blank" class="floating-btn zalo-btn" aria-label="Zalo">
+                <!-- Correct Zalo Icon -->
+                <svg class="w-8 h-8" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" fill="#0068FF"/>
+                    <path d="M382.7 343.5c-1.3-1.3-3.3-3.5-5.5-3.5-2 0-3.5 .2-5.7 .2-22.5 0-38-2.8-50.5-8.5-12-5.5-22.2-13.8-30-24.5-7.7-10.7-13-23.5-15.8-38-.5-2.8-.8-5.5-.8-8.5s.3-5.7.8-8.5c2.8-14.5 8-27.3 15.8-38 7.8-10.7 18-19 30-24.5 12.5-5.7 28-8.5 50.5-8.5 2.2 0 3.7 .2 5.7 .2 2.2 0 4.2-2.2 5.5-3.5 1.3-1.3 2-3.3 2-5.5s-.7-4.2-2-5.5c-7.5-7.5-18.8-11.8-30.2-11.8-11.5 0-22.8 4.3-30.2 11.8-10.7 10.7-18.2 24-22.2 39.2-4 15.3-4.8 31.3-2.2 48.2 2.5 17 8.5 32.2 17.5 45.8 9 13.5 21.2 24.8 36.2 33.2 15 8.5 32.5 13.8 52 13.8 11.5 0 22.8-4.3 30.2-11.8 1.3-1.3 2-3.3 2-5.5s-.7-4.2-2-5.5zM249.2 240H152c-4.2 0-7.5 3.3-7.5 7.5v.2c0 4.2 3.3 7.5 7.5 7.5h89.5c-2.5-5-5.2-9.8-8.3-15.2zM360 264.8h-89.5c2.5 5 5.2 9.8 8.3 15.2h81.2c4.2 0 7.5-3.3 7.5-7.5v-.2c0-4.2-3.3-7.5-7.5-7.5zM249.2 206.5H167c-4.2 0-7.5 3.3-7.5 7.5v.2c0 4.2 3.3 7.5 7.5 7.5h73.8c-2.5-5-5-9.8-7.6-15.2z" fill="#fff"/>
+                </svg>
+                <span class="btn-label" data-lang="zalo_label">Zalo</span>
+            </a>
+            <a href="https://www.facebook.com/share/1JDazmMHtR/" target="_blank" class="floating-btn bg-blue-700" aria-label="Facebook">
+                <!-- Correct Facebook Icon -->
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.732 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z"/></svg>
+            </a>
+            <a href="tel:+79042109098" class="floating-btn bg-gray-700" aria-label="Call">
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // --- Translations Object ---
+        const translations = {
+            en: {
+                logo: "Dr. Hung Dental", nav_about: "About", nav_services: "Services", nav_locations: "Locations", nav_contact: "Contact",
+                doctor_name: "ThS.BS. Đặng Quốc Hùng", doctor_position_label: "Position:", doctor_position_value: "Dentist", doctor_education_label: "Education:", doctor_education_value: "Master's Degree in Odonto-Stomatology, Voronezh State University",
+                services_title: "Treatments",
+                service1: "Caries and pulpitis treatment", service2: "Scaling and gingivitis treatment", service3: "Tooth extraction, difficult wisdom tooth extraction", service4: "Dental crowns, Implant placement", service5: "Braces – Cosmetic Orthodontics",
+                locations_title: "Our Clinics",
+                location1_title: "Branch 1", location1_address: "Kotelniki, Parkovy microdistrict, 1", location1_desc: "Metro Kotelniki, next to Sadovod & Liublino",
+                location2_title: "Branch 2", location2_address: "Yeseninsky Boulevard 21k2", location2_desc: "Metro Seligerskaya, near Hanoi–Moscow Center",
+                location3_title: "Branch 3", location3_address: "Vidnoye, Yermolinskaya st., 3", location3_desc: "Vidnoye city",
+                contact_title: "Contact Us", contact_subtitle: "Ready for a perfect smile? Reach out to us directly through your favorite app.",
+                zalo_label: "Zalo", copied: "Copied!",
+            },
+            vi: {
+                logo: "Nha Khoa Dr. Hùng", nav_about: "Giới thiệu", nav_services: "Dịch vụ", nav_locations: "Địa chỉ", nav_contact: "Liên hệ",
+                doctor_name: "ThS.BS. Đặng Quốc Hùng", doctor_position_label: "Chức vụ:", doctor_position_value: "Bác sĩ Nha khoa", doctor_education_label: "Học vấn:", doctor_education_value: "Thạc sĩ chuyên ngành Răng – Hàm – Mặt, tốt nghiệp Đại học Quốc gia Voronezh",
+                services_title: "Các dịch vụ điều trị",
+                service1: "Điều trị sâu răng, viêm tủy", service2: "Lấy cao răng, điều trị viêm lợi", service3: "Nhổ răng, nhổ răng số 8 khó", service4: "Phục hình răng sứ, cấy ghép Implant", service5: "Niềng răng – Chỉnh nha thẩm mỹ",
+                locations_title: "Các chi nhánh",
+                location1_title: "Chi nhánh 1", location1_address: "r. Котельники, мкр. Парковый д.1", location1_desc: "Metro Котельники, cạnh Sadovod & Liublino",
+                location2_title: "Chi nhánh 2", location2_address: "Есениинский бульвар 21к2", location2_desc: "Metro Селигерская, gần Trung tâm Hà Nội–Moscow",
+                location3_title: "Chi nhánh 3", location3_address: "r. Видное, Ермолинская д.3", location3_desc: "Thành phố Vidnoye",
+                contact_title: "Liên Hệ", contact_subtitle: "Sẵn sàng cho nụ cười hoàn hảo? Liên hệ trực tiếp với chúng tôi qua ứng dụng bạn yêu thích.",
+                zalo_label: "Zalo", copied: "Đã chép!",
+            },
+            ru: {
+                logo: "Стоматолог Др. Хунг", nav_about: "О нас", nav_services: "Услуги", nav_locations: "Адреса", nav_contact: "Контакты",
+                doctor_name: "ThS.BS. Đặng Quốc Hùng", doctor_position_label: "Должность:", doctor_position_value: "Стоматолог", doctor_education_label: "Образование:", doctor_education_value: "Магистр стоматологии, Воронежский государственный университет",
+                services_title: "Наши Услуги",
+                service1: "Лечение кариеса и пульпита", service2: "Снятие зубного камня, лечение гингивита", service3: "Удаление зубов, сложное удаление зубов мудрости", service4: "Зубные коронки, имплантация", service5: "Брекеты – Эстетическая ортодонтия",
+                locations_title: "Наши клиники",
+                location1_title: "Филиал 1", location1_address: "г. Котельники, мкр. Парковый, д.1", location1_desc: "Метро Котельники, рядом с Садоводом и Люблино",
+                location2_title: "Филиал 2", location2_address: "Есенинский бульвар 21к2", location2_desc: "Метро Селигерская, рядом с ТЦ Ханой–Москва",
+                location3_title: "Филиал 3", location3_address: "г. Видное, ул. Ермолинская, д.3", location3_desc: "Город Видное",
+                contact_title: "Свяжитесь с нами", contact_subtitle: "Готовы к идеальной улыбке? Свяжитесь с нами напрямую через ваше любимое приложение.",
+                zalo_label: "Zalo", copied: "Скопировано!",
+            },
+            zh: {
+                logo: "Hung医生牙科", nav_about: "关于我们", nav_services: "服务项目", nav_locations: "诊所地址", nav_contact: "联系方式",
+                doctor_name: "ThS.BS. Đặng Quốc Hùng", doctor_position_label: "职位:", doctor_position_value: "牙科医生", doctor_education_label: "教育:", doctor_education_value: "口腔医学硕士, 毕业于沃罗涅日国立大学",
+                services_title: "治疗项目",
+                service1: "龋齿和牙髓炎治疗", service2: "洁牙和牙龈炎治疗", service3: "拔牙、困难智齿拔除", service4: "牙冠、种植牙", service5: "牙套 – 美容正畸",
+                locations_title: "我们的诊所",
+                location1_title: "第一分店", location1_address: "科捷利尼基, Parkovy小区, 1号", location1_desc: "科捷利尼基地铁站，靠近Sadovod和Liublino市场",
+                location2_title: "第二分店", location2_address: "叶赛宁大道 21к2", location2_desc: "Seligerskaya地铁站，靠近河内-莫斯科中心",
+                location3_title: "第三分店", location3_address: "维德诺耶, Yermolinskaya街, 3号", location3_desc: "维德诺耶市",
+                contact_title: "联系我们", contact_subtitle: "准备好拥有完美的微笑了吗？通过您喜欢的应用直接与我们联系。",
+                zalo_label: "Zalo", copied: "已复制！",
+            },
+        };
+
+        // --- Clipboard Functionality ---
+        function copyToClipboard(button, text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            // For mobile devices
+            textarea.setSelectionRange(0, 99999); 
+            try {
+                document.execCommand('copy');
+                const feedback = button.nextElementSibling;
+                feedback.style.opacity = '1';
+                feedback.style.transform = 'translateX(-50%) translateY(-10px)';
+                setTimeout(() => {
+                    feedback.style.opacity = '0';
+                    feedback.style.transform = 'translateX(-50%)';
+                }, 2000);
+            } catch (err) { console.error('Failed to copy text: ', err); }
+            document.body.removeChild(textarea);
+        }
+        window.copyToClipboard = copyToClipboard;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Language Switching Logic ---
+            const flagMap = { en: '🇬🇧', vi: '🇻🇳', ru: '🇷🇺', zh: '🇨🇳' };
+            const langSwitcher = document.getElementById('lang-switcher');
+            const langDropdown = document.getElementById('lang-dropdown');
+            const currentLangFlag = document.getElementById('current-lang-flag');
+
+            langSwitcher.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langDropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', () => langDropdown.classList.add('hidden'));
+
+            function setLanguage(lang) {
+                if (!translations[lang]) lang = 'vi'; // Default to Vietnamese
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-lang]').forEach(el => {
+                    const key = el.getAttribute('data-lang');
+                    if (translations[lang][key] !== undefined) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+                currentLangFlag.textContent = flagMap[lang];
+                langDropdown.classList.add('hidden');
+                try { localStorage.setItem('preferred_language', lang); } catch (e) { console.warn("localStorage not available."); }
+            }
+
+            langDropdown.addEventListener('click', (e) => {
+                e.preventDefault();
+                const langCode = e.target.closest('a')?.dataset.langCode;
+                if (langCode) setLanguage(langCode);
+            });
+
+            function detectAndSetLanguage() {
+                let preferredLang = 'vi'; // Default to Vietnamese
+                try { preferredLang = localStorage.getItem('preferred_language'); } catch (e) { /* ignore */ }
+                const browserLang = navigator.language.split('-')[0];
+                setLanguage(preferredLang || (translations[browserLang] ? browserLang : 'vi'));
+            }
+            
+            detectAndSetLanguage();
+
+            // --- GSAP Animations ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            const splashScreen = document.getElementById('splash-screen');
+            const logoContainer = document.getElementById('logo-container');
+            const mainContent = document.getElementById('main-content');
+
+            // Splash Screen Animation
+            const tlSplash = gsap.timeline({
+                onComplete: () => {
+                    gsap.to(splashScreen, { opacity: 0, duration: 0.8, ease: "power1.inOut", onComplete: () => splashScreen.style.display = 'none' });
+                    gsap.to(mainContent, { opacity: 1, duration: 1, ease: "power1.inOut" });
+                    mainContent.classList.remove('invisible');
+                    runPageAnimations();
+                }
+            });
+
+            tlSplash
+                .fromTo(logoContainer, 
+                    { opacity: 0, scale: 0.7, boxShadow: "0 0 0px rgba(255,255,255,0)" }, 
+                    { opacity: 1, scale: 1, boxShadow: "0 0 40px rgba(255,255,255,0.4)", duration: 1.2, ease: "back.out(1.7)" })
+                .to(logoContainer, { scale: 0.95, yoyo: true, repeat: 1, ease: "sine.inOut" }, "-=0.2")
+                .to(logoContainer, { scale: 50, opacity: 0, duration: 1, ease: "power2.in" }, "+=0.5");
+
+            function runPageAnimations() {
+                // Dynamic Header Text Color
+                const header = document.getElementById('header');
+                document.querySelectorAll('.section-light, .section-dark').forEach(section => {
+                    ScrollTrigger.create({
+                        trigger: section, start: "top 70px", end: "bottom 70px",
+                        onToggle: self => {
+                            if (self.isActive) {
+                                header.classList.remove('text-light', 'text-dark');
+                                header.classList.add(section.classList.contains('section-dark') ? 'text-light' : 'text-dark');
+                            }
+                        }
+                    });
+                });
+                
+                ScrollTrigger.create({ start: 'top -60', end: 99999, toggleClass: { className: 'glassmorphism', targets: '#header' } });
+                gsap.to("#profile-card", { scrollTrigger: { trigger: "#about", start: "top top", end: "bottom top", scrub: true }, yPercent: 50, ease: "none" });
+                gsap.from(".service-item", { scrollTrigger: { trigger: "#services", start: "top 80%", toggleActions: 'play none none none' }, duration: 0.8, x: -50, opacity: 0, stagger: 0.15, ease: "power3.out" });
+                gsap.from(".location-card", { scrollTrigger: { trigger: "#locations", start: "top 80%", toggleActions: 'play none none none' }, duration: 0.8, y: 50, opacity: 0, stagger: 0.2, ease: "power3.out" });
+            }
+        });
+    </script>
+</body>
+</html>
